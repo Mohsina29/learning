@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4c4940">
+  <title>Sign in to Admin | crik18</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: #101114;
+      background: #4c4940;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 36px 24px;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(117, 111, 93, .32), transparent 58%),
+        linear-gradient(155deg, #5b5141 0%, #454640 53%, #3d4140 100%);
+    }
+
+    .login-panel {
+      width: min(100%, 630px);
+      padding: 30px 31px 31px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 19px;
+      background: #c9c9c9;
+      box-shadow: 0 22px 58px rgba(17, 19, 18, .2), 0 2px 4px rgba(255, 255, 255, .12) inset;
+      animation: panel-in 560ms cubic-bezier(.2, .75, .25, 1) both;
+    }
+
+    .brand {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      height: 120px;
+      margin: 0 auto 15px;
+      user-select: none;
+    }
+
+    .brand-name {
+      display: block;
+      margin: 0 -3px 3px 0;
+      color: #0a8e5e;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-size: clamp(64px, 12vw, 82px);
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -5px;
+      line-height: 1;
+      text-shadow: 0 2px 0 #61d1a4, 0 4px 0 #086442, 0 7px 7px rgba(0, 0, 0, .22);
+    }
+
+    .ball {
+      position: relative;
+      display: grid;
+      width: 100px;
+      aspect-ratio: 1;
+      place-items: center;
+      overflow: hidden;
+      border: 2px solid #92bb8d;
+      border-radius: 50%;
+      background: radial-gradient(circle at 31% 23%, #fff 0%, #eef0e9 26%, #c5c9c0 57%, #969c91 100%);
+      box-shadow: 0 5px 9px rgba(0, 0, 0, .23), inset -5px -7px 11px rgba(39, 57, 41, .25), inset 3px 3px 5px rgba(255, 255, 255, .9);
+      isolation: isolate;
+    }
+
+    .ball::before,
+    .ball::after {
+      position: absolute;
+      z-index: -1;
+      width: 66px;
+      height: 110px;
+      border: 2px solid rgba(40, 131, 72, .82);
+      border-radius: 50%;
+      content: "";
+      transform: rotate(34deg);
+    }
+
+    .ball::after {
+      width: 81px;
+      border-style: dashed;
+      border-color: rgba(52, 143, 78, .62);
+      transform: rotate(-38deg);
+    }
+
+    .ball-number {
+      color: #087347;
+      font-size: 53px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+      text-shadow: 0 2px 0 #72c69c, 0 4px 4px rgba(0, 0, 0, .34);
+    }
+
+    h1 {
+      margin: 0 0 25px;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.2;
+    }
+
+    .field + .field { margin-top: 20px; }
+
+    label {
+      display: block;
+      margin-bottom: 17px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .required { color: #db102c; }
+
+    .input-shell {
+      display: flex;
+      align-items: center;
+      min-height: 70px;
+      padding: 8px;
+      border: 1px solid #e6e6e6;
+      border-radius: 13px;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .input-shell:focus-within {
+      border-color: #168b70;
+      box-shadow: 0 0 0 3px rgba(0, 145, 116, .16);
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      height: 52px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 11px;
+      outline: 0;
+      background: #e8f0ff;
+      color: #11151a;
+      font: inherit;
+      font-size: 21px;
+    }
+
+    input::placeholder { color: #717985; opacity: 1; }
+
+    .password-input { flex: 1; }
+
+    .visibility-toggle {
+      display: grid;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      margin-left: -43px;
+      place-items: center;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: #10151b;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .visibility-toggle:hover { background: rgba(16, 21, 27, .08); }
+    .visibility-toggle:focus-visible { outline: 2px solid #078c6c; outline-offset: 1px; }
+    .visibility-toggle svg { width: 24px; height: 24px; }
+    .visibility-toggle .eye-off { display: none; }
+    .visibility-toggle[aria-pressed="true"] .eye { display: none; }
+    .visibility-toggle[aria-pressed="true"] .eye-off { display: block; }
+
+    .login-button {
+      width: 100%;
+      min-height: 70px;
+      margin-top: 59px;
+      border: 0;
+      border-radius: 12px;
+      background: #009c79;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 29px;
+      font-weight: 700;
+      transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    .login-button:hover { background: #008b6b; box-shadow: 0 5px 13px rgba(0, 98, 74, .2); }
+    .login-button:active { transform: translateY(1px); }
+    .login-button:focus-visible { outline: 3px solid #075d4c; outline-offset: 3px; }
+
+    .form-message {
+      min-height: 0;
+      margin: 0;
+      color: #752327;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .form-message:not(:empty) { margin-top: 14px; }
+
+    @keyframes panel-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 20px 15px; }
+      .login-panel { padding: 20px 20px 23px; border-radius: 16px; }
+      .brand { height: 104px; margin-bottom: 12px; }
+      .brand-name { font-size: 67px; }
+      .ball { width: 82px; }
+      .ball-number { font-size: 45px; }
+      h1 { margin-bottom: 22px; font-size: 28px; }
+      label { margin-bottom: 12px; font-size: 18px; }
+      .field + .field { margin-top: 17px; }
+      .input-shell { min-height: 62px; padding: 6px; }
+      input { height: 48px; font-size: 18px; }
+      .login-button { min-height: 62px; margin-top: 38px; font-size: 25px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="login-panel">
+    <div class="brand" aria-label="crik 18">
+      <span class="brand-name" aria-hidden="true">crik</span>
+      <span class="ball" aria-hidden="true"><span class="ball-number">18</span></span>
+    </div>
+
+    <h1>Sign in to Admin</h1>
+    <form id="login-form">
+      <div class="field">
+        <label for="username">Username<span class="required" aria-hidden="true">*</span></label>
+        <div class="input-shell">
+          <input id="username" name="username" type="text" placeholder="Enter your username" autocomplete="username" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password<span class="required" aria-hidden="true">*</span></label>
+        <div class="input-shell">
+          <input class="password-input" id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button class="visibility-toggle" id="password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+            <svg class="eye" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+            </svg>
+            <svg class="eye-off" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m3 3 18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 5.2A10.5 10.5 0 0 1 12 5c6.4 0 10 7 10 7a15 15 0 0 1-3.1 3.8M6.2 6.3C3.5 8.1 2 12 2 12s3.6 7 10 7a10 10 0 0 0 3-.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button class="login-button" type="submit">Login</button>
+      <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script>
+    const passwordInput = document.querySelector("#password");
+    const passwordToggle = document.querySelector("#password-toggle");
+    const loginForm = document.querySelector("#login-form");
+    const formMessage = document.querySelector("#form-message");
+
+    passwordToggle.addEventListener("click", () => {
+      const isVisible = passwordInput.type === "text";
+      passwordInput.type = isVisible ? "password" : "text";
+      passwordToggle.setAttribute("aria-pressed", String(!isVisible));
+      passwordToggle.setAttribute("aria-label", isVisible ? "Show password" : "Hide password");
+      passwordInput.focus();
+    });
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      formMessage.textContent = "Sign-in is not connected yet. Configure an authentication service to continue.";
+    });
+  </script>
+</body>
+</html>
